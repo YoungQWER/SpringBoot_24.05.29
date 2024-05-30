@@ -1,7 +1,7 @@
-package com.membertest.controller;
+package com.membertest2.Controller;
 
-import com.membertest.entity.Member;
-import com.membertest.service.MemberService;
+import com.membertest2.entity.Member;
+import com.membertest2.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

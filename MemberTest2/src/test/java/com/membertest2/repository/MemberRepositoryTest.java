@@ -11,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +31,7 @@ class MemberRepositoryTest {
 
     //추가
     @Test
-    public void testInsert(){
+    public void memberInsert(){
 
         for(int i=0; i<10; i++){
             Member member = Member.builder()
@@ -45,9 +47,14 @@ class MemberRepositoryTest {
 
     //단건 조회
     @Test
-    public void testGetOne(){
+    public void memberGetOne(){
 
-        Long memberId = 1L;
+        Long memberId = 5L;
+
+        //Ctrl+alt+v
+        //Optional<Member> result = memberRepository.findById(memberId);
+
+        //null값일때
 
         Member member = memberRepository
                 .findById(memberId)
@@ -55,6 +62,7 @@ class MemberRepositoryTest {
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Member not found : " + memberId)
                 );
 
+//        Member member = memberRepository.findById(memberId).get();
         log.info(member);
     }
 
@@ -68,7 +76,7 @@ class MemberRepositoryTest {
     //전체 데이터 페이징 처리
     @Test
     public void memberPaging(){
-        Pageable pageable = PageRequest.of(1,5);
+        Pageable pageable =  PageRequest.of(1,5);
 
         Page<Member> result = memberRepository.findAll(pageable);
 
@@ -84,6 +92,7 @@ class MemberRepositoryTest {
         Long memberId = 13L;
 
         memberRepository.deleteById(memberId);
+
     }
 
     //업데이트
@@ -92,12 +101,12 @@ class MemberRepositoryTest {
         Member member = Member.builder()
                 .name("수정")
                 .age(4)
-                .phone("010-3333-2222")
+                .phone("010-3333-4444")
                 .address("경기도 수원시 팔달구")
                 .id(12L)
                 .build();
 
-        //저장 할 때, 수정 할때 => save
+        //저장 할 때, 수정 할 때 -> save
         memberRepository.save(member);
     }
 }
