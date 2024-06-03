@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,13 +38,13 @@ public class MemberController {
         log.info(members);
         model.addAttribute("members", members);
 
-        return "/member/list";
+        return "member/list";
     }
 
     @GetMapping("/new")
     public String newGet(Model model){
         model.addAttribute("member", new Member());
-        return "/member/newForm";
+        return "member/newForm";
     }
 
     //멤버 등록 or 수정
