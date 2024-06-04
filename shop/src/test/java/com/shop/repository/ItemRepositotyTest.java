@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -23,8 +24,8 @@ class ItemRepositotyTest {
     public void createItemTest(){
         Item item = new Item();
 
-        item.setItemNm("라면323");
-        item.setPrice(1500);
+        item.setItemNm("라면11");
+        item.setPrice(40000);
         item.setItemDetail("라면 상세 설명");
         item.setItemSellStatus(ItemSellStatus.SELL);
         item.setStoackNumber(100);
@@ -55,9 +56,9 @@ class ItemRepositotyTest {
     @Test
     @DisplayName("라면 상세 설명")
     public void findByItemDetailTest(){
-        Item item = itemRepositoty.findByItemDetail("라면 상세 설명");
+        List<Item> item = itemRepositoty.findByItemDetail("라면");
 
-        log.info("라면 상세 설명 : " + item);
+        item.forEach(List ->log.info(List));
     }
 
     @Test
@@ -67,6 +68,24 @@ class ItemRepositotyTest {
                 .findByItemNmAndItemDetail("라면2", "라면 상세 설명3");
 
         log.info("라면 상세 설명 : " + item);
+    }
+
+    @Test
+    @DisplayName("price가 10000이하 검색")
+    public void findByPriceTest() {
+        List<Item> list
+                = itemRepositoty.findByPriceLessThan(10000);
+
+        list.forEach(result-> log.info(result));
+    }
+
+    @Test
+    @DisplayName("10000 미만으로 내림차순 정렬")
+    public void findByPriceLessThanOrderByPriceDesc(){
+        List<Item> list
+                = itemRepositoty.findByPriceLessThanOrderByPriceDesc(10000);
+
+        list.forEach(result-> log.info(result));
     }
 
 }
