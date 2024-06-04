@@ -61,13 +61,19 @@ class ItemRepositotyTest {
         item.forEach(List ->log.info(List));
     }
 
-    @Test
-    @DisplayName("라면 & 라면 상세 설명")
-    public void findByItemNmAndItemDetailTest() {
-        Item item = itemRepositoty
-                .findByItemNmAndItemDetail("라면2", "라면 상세 설명3");
-
-        log.info("라면 상세 설명 : " + item);
+//    @Test
+//    @DisplayName("라면 & 라면 상세 설명")
+//    public void findByItemNmAndItemDetailTest() {
+//        Item item = itemRepositoty
+//                .findByItemNmAndItemDetail("라면2", "라면 상세 설명3");
+//
+//        log.info("라면 상세 설명 : " + item);
+//    }
+        @Test
+        @DisplayName("라면 & 라면 상세 설명")
+        public void findByItemNmAndItemDetailTest() {
+            List<Item> item = itemRepositoty.findByItemNmAndItemDetail("라면", "라면 상세 설명");
+        item.forEach(list->log.info(list));
     }
 
     @Test
@@ -77,6 +83,13 @@ class ItemRepositotyTest {
                 = itemRepositoty.findByPriceLessThan(10000);
 
         list.forEach(result-> log.info(result));
+    }
+
+    @Test
+    @DisplayName("findByItemDetailByNative")
+    public void findByItemDetailByNative() {
+        List<Item> items = itemRepositoty.findByItemDetailByNative("라면");
+        items.forEach(result-> log.info(result));
     }
 
     @Test
