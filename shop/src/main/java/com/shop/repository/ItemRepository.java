@@ -15,7 +15,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findByPriceLessThan(int price);
     List<Item> findByPriceLessThanOrderByPriceDesc(int price);
 
-//    @Query("select i.itemNm, i.price from Item i \n " +
+//     @Query("select i.itemNm, i.price from Item i \n " +
 //            "where i.itemDetail like %:itemDetail% \n" +
 //            "order by i.price desc")
 
