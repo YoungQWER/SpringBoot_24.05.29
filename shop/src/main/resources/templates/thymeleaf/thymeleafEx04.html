@@ -19,7 +19,10 @@
         </thead>
         <tbody>
             <tr th:each="itemDto , aaa:${itemDtoList}">
-                <td th:text="${aaa.index}"></td>
+
+                <td th:if="${aaa.even}" th:text="짝수"></td>
+                <td th:unless="${aaa.even}" th:text="홀수"></td>
+
                 <td th:text="${itemDto.itemNm}"></td>
                 <td th:text="${itemDto.itemDetail}"></td>
                 <td th:text="${itemDto.price}"></td>

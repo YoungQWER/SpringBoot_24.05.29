@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -80,4 +81,20 @@ public class ThymeleafExController {
 
         return "thymeleaf/thymeleafEx04";
     }
+
+    @GetMapping("/ex05")
+    public String ex05(Model model) {
+        return "thymeleaf/thymeleafEx05";
+    }
+
+    @GetMapping("/ex06")
+    public String ex06(@RequestParam("param1") String param1,
+                       @RequestParam("param2") String param2) {
+        log.info("-------------------------");
+        log.info(param1);
+        log.info(param2);
+
+        return "thymeleaf/thymeleafEx06";
+    }
+
 }
