@@ -5,8 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-    <p th:text="${data}">Hello Thymeleaf!!!</p>
-    <br>
-    [[${data}]]
+    <h1>상품 데이터 출력</h1>
+
+    <div>
+        상품명 : <span th:text="${itemDto.getItemDetail()}"></span>
+    </div>
+
+    <div>
+        상품성세설명 : <span th:text="${itemDto.itemDetail}"></span>
+    </div>
+
+    <div>
+        상품가격 : <span th:text="${itemDto.price}"></span>
+    </div>
+
+    <div>
+        상품등록일 : [[${itemDto.regTime}]]
+    </div>
+
 </body>
 </html>
