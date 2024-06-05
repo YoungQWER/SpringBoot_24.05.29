@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -84,6 +85,8 @@ public class ThymeleafExController {
 
     @GetMapping("/ex05")
     public String ex05(Model model) {
+
+        model.addAttribute("link", "ex08");
         return "thymeleaf/thymeleafEx05";
     }
 
@@ -96,5 +99,27 @@ public class ThymeleafExController {
 
         return "thymeleaf/thymeleafEx06";
     }
+
+    @GetMapping("/ex07")
+    public String ex07(Model model) {
+
+        model.addAttribute("data", "<b>Spring boot</b>");
+
+        return "thymeleaf/thymeleafEx07";
+    }
+
+    @GetMapping("/ex08")
+    public String ex08(
+        @RequestParam("param2") String p2,
+        Model model){
+
+        log.info("------------------------------");
+        log.info(p2);
+        log.info("------------------------------");
+
+        return "thymeleaf/thymeleafEx08";
+    }
+
+
 
 }
