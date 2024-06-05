@@ -120,6 +120,16 @@ public class ThymeleafExController {
         return "thymeleaf/thymeleafEx08";
     }
 
+    @GetMapping("/ex09")
+    public String ex09(Model model){
+
+        model.addAttribute("data", "spring!!!");
+        model.addAttribute("num", 10);
+
+        return "thymeleaf/thymeleafEx09";
+    }
+
+
 
 
 }
