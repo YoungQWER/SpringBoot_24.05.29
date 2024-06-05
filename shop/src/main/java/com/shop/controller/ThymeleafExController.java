@@ -103,9 +103,15 @@ public class ThymeleafExController {
     @GetMapping("/ex07")
     public String ex07(Model model) {
 
+        return "thymeleaf/thymeleafEx07";
+    }
+
+    @GetMapping("/ex07_")
+    public String ex07_(Model model) {
+
         model.addAttribute("data", "<b>Spring boot</b>");
 
-        return "thymeleaf/thymeleafEx07";
+        return "thymeleaf/thymeleafEx07_";
     }
 
     @GetMapping("/ex08")
