@@ -42,4 +42,18 @@ class MemberServiceTest {
 
         Member savedMember = memberService.saveMember(member);
     }
+
+    @Test
+    @DisplayName("중복 가입 테스트")
+    public void saveDuplicateMemberTest(){
+        Member member = createMember();
+        Member member2 = createMember();
+
+        Member savedMember = memberService.saveMember(member);
+        Member savedMember2 = memberService.saveMember(member2);
+    }
+
+
+
+
 }
