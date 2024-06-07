@@ -17,6 +17,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFiterChain(HttpSecurity http) throws Exception{
         log.info("------------------SecurityFiterChain--------------------");
+        http.csrf().disable();
 
         return  http.build();
 
