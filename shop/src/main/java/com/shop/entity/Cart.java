@@ -10,16 +10,15 @@ import javax.persistence.*;
 @Getter
 @ToString
 @Entity
-@Table(name="cart")
+@Table(name = "cart")
 public class Cart {
 
     @Id
     @Column(name = "cart_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)     // 기본 키의 값을 데이터베이스가 자동으로 생성하도록 지정합니다
-        private Long id;    //상품코드
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
-
 }

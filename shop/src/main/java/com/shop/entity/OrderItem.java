@@ -1,6 +1,5 @@
 package com.shop.entity;
 
-import com.shop.constant.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,10 +8,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "order_item")
 @ToString
-@Setter@Getter
-public class Order {
+@Setter
+@Getter
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +20,15 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-    private LocalDateTime orderDate;   //주문일
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    private int orderPrice;     //가격
+    private int count;      //수량
 
     private LocalDateTime regTime;  //작성시간
     private LocalDateTime upateTime;  //수정시간
