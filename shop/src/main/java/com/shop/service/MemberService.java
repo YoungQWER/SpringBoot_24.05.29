@@ -5,6 +5,9 @@ import com.shop.repository.MemberRepository;
 import javassist.bytecode.DuplicateMemberException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,7 +16,7 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 @Log4j2
-public class MemberService {
+public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     public Member saveMember(Member member){
@@ -28,6 +31,11 @@ public class MemberService {
         if(findMember != null){
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
+    }
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("-----------------------loadUserByUsername----------------------");
+        return null;
     }
 
 
