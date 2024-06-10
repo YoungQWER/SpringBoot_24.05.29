@@ -33,11 +33,11 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                         .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
                         .mvcMatchers("/", "/members/login", "/item/**", "/images/**").permitAll()
-                        .mvcMatchers("/adim/**").hasRole("ADMIN")
+                        .mvcMatchers("/adimn/**").hasRole("ADMIN")
                         .anyRequest().authenticated();
 
         http.exceptionHandling()
-                        .authenticationEntryPoint(new CustomAuthticationEntryPoint());
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
         http.csrf().disable();
 
