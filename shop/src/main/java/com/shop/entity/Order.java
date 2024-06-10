@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -22,6 +23,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "order")  //외래키 설정 하지않는다.
+    private List<OrderItem> orderItems;
 
     private LocalDateTime orderDate;   //주문일
 
