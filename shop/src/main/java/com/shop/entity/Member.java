@@ -37,6 +37,7 @@ public class Member {
 //    @Enumerated(EnumType.STRING)
 //    private Role role;
 
+
     // 이거 대신 Mapper 란 것 이용할 수 있음.
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
         return Member.builder()
