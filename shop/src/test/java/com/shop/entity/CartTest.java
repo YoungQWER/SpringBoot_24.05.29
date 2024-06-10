@@ -11,13 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Log4j2
-@Transactional
+//@Transactional
 class CartTest {
 
     @Autowired
@@ -31,9 +32,9 @@ class CartTest {
 
     public Member createMember() {
         MemberFormDto formDto = MemberFormDto.builder()
-                .email("test@email.com")
+                .email("test5@test.com")
                 .address("서울시 마포구 합정동")
-                .password("1111")
+                .password("1234")
                 .build();
 
         return Member.createMember(formDto, passwordEncoder);
@@ -50,7 +51,11 @@ class CartTest {
         cart.setMember(member);
         cartRepository.save(cart);
 
-        em.flush(); em.clear();
+//        em.flush(); em.clear();
+
+        Cart savedCart = cartRepository.findById(cart.getId()).orElseThrow(() -> new EntityNotFoundException());
+
+        assertEquals(savedCart.getMember().getId(), member.getId());
     }
 
 
