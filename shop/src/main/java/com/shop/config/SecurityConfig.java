@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -28,6 +29,15 @@ public class SecurityConfig {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
                 .logoutSuccessUrl("/");
+
+        http.authorizeHttpRequests()
+                        .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                        .mvcMatchers("/", "/members/login", "/item/**", "/images/**").permitAll()
+                        .mvcMatchers("/adim/**").hasRole("ADMIN")
+                        .anyRequest().authenticated();
+
+        http.exceptionHandling()
+                        .authenticationEntryPoint(new CustomAuthticationEntryPoint());
 
         http.csrf().disable();
 

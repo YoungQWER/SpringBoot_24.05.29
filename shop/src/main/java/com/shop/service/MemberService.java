@@ -5,6 +5,7 @@ import com.shop.repository.MemberRepository;
 import javassist.bytecode.DuplicateMemberException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,9 +34,21 @@ public class MemberService implements UserDetailsService {
         }
     }
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         log.info("-----------------------loadUserByUsername----------------------");
-        return null;
+        log.info(email);
+        Member member = memberRepository.findByEmail(email);
+
+        if(member == null){
+            log.info("member Null");
+            throw new UsernameNotFoundException(email);
+        }
+
+        return User.builder()
+                .username(member.getEmail())
+                .password(member.getPassword())
+                .roles(member.getRole().toString())
+                .build();
     }
 
 
