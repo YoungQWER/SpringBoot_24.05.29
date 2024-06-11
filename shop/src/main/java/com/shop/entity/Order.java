@@ -24,7 +24,7 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order")  //외래키 설정 하지않는다.
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)  //외래키 설정 하지않는다.
     private List<OrderItem> orderItems;
 
     private LocalDateTime orderDate;   //주문일
