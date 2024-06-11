@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "orders")
 @ToString
 @Setter@Getter
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +33,5 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-
-    private LocalDateTime regTime;  //작성시간
-    private LocalDateTime upateTime;  //수정시간
 
 }
