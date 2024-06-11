@@ -18,29 +18,29 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Log4j2
 public class MemberService implements UserDetailsService {
+
     private final MemberRepository memberRepository;
 
-    public Member saveMember(Member member){
-        validateDuplicateMember(member);
+    public Member savaMember(Member member) {
+        validdateDuplicatemember(member);
         return memberRepository.save(member);
     }
 
-    private void validateDuplicateMember(Member member){
-
+    private void validdateDuplicatemember(Member member) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
-        if(findMember != null){
+        if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
 
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        log.info("-----------------------loadUserByUsername----------------------");
+        log.info("--------------------loadUserByUsername---------------------------------");
         log.info(email);
         Member member = memberRepository.findByEmail(email);
 
-        if(member == null){
-            log.info("member Null");
+        if (member == null) {
             throw new UsernameNotFoundException(email);
         }
 
@@ -50,6 +50,4 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString())
                 .build();
     }
-
-
 }

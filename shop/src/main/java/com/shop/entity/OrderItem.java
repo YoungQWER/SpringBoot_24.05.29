@@ -13,24 +13,22 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class OrderItem {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")      //외래키 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")  //외래키 설정
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private int orderPrice;     //가격
-    private int count;      //수량
+    private int orderPrice; //가격
+    private int count; //  수량
 
     private LocalDateTime regTime;  //작성시간
     private LocalDateTime upateTime;  //수정시간
-
 }

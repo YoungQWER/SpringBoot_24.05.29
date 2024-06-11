@@ -4,7 +4,7 @@ import com.shop.constant.ItemSellStatus;
 import com.shop.repository.ItemRepository;
 import com.shop.repository.MemberRepository;
 import com.shop.repository.OrderItemRepository;
-import com.shop.repository.OrderRepostory;
+import com.shop.repository.OrderRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,12 +21,12 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
 @Log4j2
+@Transactional
 class OrderTest {
 
     @Autowired
-    OrderRepostory orderRepostory;
+    OrderRepository orderRepository;
 
     @Autowired
     ItemRepository itemRepository;
@@ -42,18 +42,53 @@ class OrderTest {
 
     @Test
     @DisplayName("지연 로딩 테스트")
-    public void lazyLoadingTest(){
+    public void lazyLoadindTest(){
 
         Order order = this.createOrder();
 
-        Long orderItemid = order.getOrderItems().get(0).getId();
+        Long orderItemId = order.getOderItems().get(0).getId();
 
         em.flush();
         em.clear();
 
-        OrderItem orderItem = orderItemRepository.findById(orderItemid)
+        OrderItem orderItem = orderItemRepository.findById(orderItemId)
                 .orElseThrow(EntityNotFoundException::new);
-        log.info("orderItem : " + orderItem.getOrder().getClass());
+        log.info("Order class : " + orderItem.getOrder().getClass());
+
+    }
+
+
+    public Order createOrder(){
+        Order order = new Order();
+
+        for(int i=0; i<3; i++){
+            Item item = this.createItem();
+            itemRepository.save(item);
+
+            OrderItem orderItem = new OrderItem();
+
+            orderItem.setItem(item);
+            orderItem.setCount(10);
+            orderItem.setOrderPrice(100);
+            orderItem.setOrder(order);
+            order.getOderItems().add(orderItem);
+        }
+
+        Member member = new Member();
+        memberRepository.save(member);
+
+        order.setMember(member);
+        orderRepository.save(order);
+        return order;
+    }
+
+    @Test
+    @DisplayName("고아 객체 제거 테스트")
+    public void orphanRemovealTest(){
+        Order order = this.createOrder();
+
+        order.getOderItems().remove(0);
+        em.flush();
     }
 
     public Item createItem(){
@@ -65,53 +100,58 @@ class OrderTest {
         item.setStoackNumber(100);
         item.setRegTime(LocalDateTime.now());
         item.setUpdateTime(LocalDateTime.now());
+
         return item;
     }
 
     @Test
     @DisplayName("영속성 전이 테스트")
-    public void cascadeTest() {
+    public void cacadeTest(){
 
         Order order = new Order();
 
-        for(int i=0;i<3;i++){
+        for(int i=0; i<3; i++){
             Item item = this.createItem();
             itemRepository.save(item);
+
             OrderItem orderItem = new OrderItem();
+
             orderItem.setItem(item);
             orderItem.setCount(10);
             orderItem.setOrderPrice(1000);
             orderItem.setOrder(order);
-            order.getOrderItems().add(orderItem);
+            order.getOderItems().add(orderItem);
         }
 
-        orderRepostory.saveAndFlush(order);
+        orderRepository.saveAndFlush(order);
         em.clear();
 
-        Order savedOrder = orderRepostory.findById(order.getId())
-                .orElseThrow(EntityNotFoundException::new);
-        assertEquals(3, savedOrder.getOrderItems().size());
+        Order savedOrder = orderRepository.findById(order.getId())
+                .orElseThrow(()->new EntityNotFoundException());
 
+        log.info("======> " + savedOrder.getOderItems().size());
+
+        assertEquals(3, savedOrder.getOderItems().size());
     }
 
-    public Order createOrder(){
-        Order order = new Order();
-        for(int i=0;i<3;i++){
-            Item item = createItem();
-            itemRepository.save(item);
-            OrderItem orderItem = new OrderItem();
-            orderItem.setItem(item);
-            orderItem.setCount(10);
-            orderItem.setOrderPrice(1000);
-            orderItem.setOrder(order);
-            order.getOrderItems().add(orderItem);
-        }
-        Member member = new Member();
-        memberRepository.save(member);
 
-        order.setMember(member);
-        orderRepostory.save(order);
-        return order;
-    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

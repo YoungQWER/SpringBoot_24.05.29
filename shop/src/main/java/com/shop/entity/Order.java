@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,8 +25,9 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)  //외래키 설정 하지않는다.
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "order" ,cascade = CascadeType.ALL
+            ,orphanRemoval = true)  //외래키 설정 하지않는다.
+    private List<OrderItem> oderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;   //주문일
 
