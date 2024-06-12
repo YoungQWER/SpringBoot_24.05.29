@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -24,25 +23,24 @@ public class ItemService {
     private final ItemImgService itemImgService;
     private final ItemImgRepository itemImgRepository;
 
-    public Long saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+    public Long saveItem(ItemFormDto itemFormDto,
+                         List<MultipartFile> itemImgFileList) throws Exception {
 
-        //상품 등록
+        // 상품 등록
         Item item = itemFormDto.createItem();
         itemRepository.save(item);
 
-        //이미지 등록
-        for(int i=0; i<itemImgFileList.size(); i++){
+        // 이미지 등록
+        for (int i = 0; i < itemImgFileList.size(); i++) {
             ItemImg itemImg = new ItemImg();
             itemImg.setItem(item);
-
-            if(i==0) {
-                itemImg.setRepimgYn("Y");   //첫번째 사진이 대표이미지
-            }else{
+            if (i == 0) {
+                itemImg.setRepimgYn("Y");
+            } else {
                 itemImg.setRepimgYn("N");
-                itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
             }
+            itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
         }
-
         return item.getId();
     }
 }

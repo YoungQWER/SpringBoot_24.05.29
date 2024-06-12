@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 public class ItemImgDto {
 
     private Long id;
@@ -15,6 +16,7 @@ public class ItemImgDto {
     private String imgName;     //이미지명
     private String oriImgName;  //원본이미지명
     private String oriUrl;      //이미지 경로
+    private  int stockNumber; //stoack_number
 
     private String repimgYn;    //대표이미지 ( 이미지가 여러장일 때, 메인페이지에서 보이는 이미지)
 

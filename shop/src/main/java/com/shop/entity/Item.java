@@ -27,7 +27,7 @@ public class Item extends BaseEntity {
     private  int price;   //price
 
     @Column(nullable = false)
-    private  int stoackNumber; //stoack_number
+    private  int stockNumber; //stoack_number
 
     @Lob
     @Column(nullable = false)
