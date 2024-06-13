@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberTest {
 
     @Autowired
-    private MemberRepository memberRepository;
+    MemberRepository memberRepository;
 
     @PersistenceContext
     EntityManager em;
@@ -44,5 +44,6 @@ class MemberTest {
         log.info(member.getUpdateTime());
         log.info(member.getCreatedBy());
         log.info(member.getModifiedBy());
+
     }
 }

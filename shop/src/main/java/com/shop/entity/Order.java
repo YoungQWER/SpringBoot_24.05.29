@@ -26,12 +26,13 @@ public class Order extends BaseEntity {
     private Member member;
 
     @OneToMany(mappedBy = "order" ,cascade = CascadeType.ALL
-            ,orphanRemoval = true)  //외래키 설정 하지않는다.
+            ,orphanRemoval = true, fetch = FetchType.LAZY)  //외래키 설정 하지않는다.
     private List<OrderItem> oderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;   //주문일
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
 
 }

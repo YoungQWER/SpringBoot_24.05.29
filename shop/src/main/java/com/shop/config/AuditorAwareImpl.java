@@ -14,15 +14,15 @@ public class AuditorAwareImpl implements AuditorAware<String> {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
 
-        log.info("-----------------------------------------");
+        log.info("==========================================");
         log.info("Current user: " + authentication.getName());
-        log.info("-----------------------------------------");
+        log.info("==========================================");
 
-        String userid = "";
+        String userId = "";
 
         if(authentication != null){
-            userid = authentication.getName();
+            userId = authentication.getName();
         }
-        return Optional.of(userid);
+        return Optional.of(userId);
     }
 }
