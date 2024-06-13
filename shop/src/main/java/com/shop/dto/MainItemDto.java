@@ -3,27 +3,28 @@ package com.shop.dto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Setter
-@Getter
+@Setter@Getter
+@ToString
 public class MainItemDto {
 
     private Long id;
 
     private String itemNm;
 
-    private String itemDetial;
+    private String itemDetail;
 
     private String imgUrl;
 
     private Integer price;
 
-    //Querydsl실행 결과 값을 MainItemDto 객체로 받아서 객체 생성 
+    //Querydsl실행 결과 값을 MainItemDto 생성자로 받아서 객체 생성
     @QueryProjection
-    public MainItemDto(Long id, String itemNm, String itemDetial, String imgUrl, Integer price) {
+    public MainItemDto(Long id, String itemNm, String itemDetail, String imgUrl, Integer price) {
         this.id = id;
         this.itemNm = itemNm;
-        this.itemDetial = itemDetial;
+        this.itemDetail = itemDetail;
         this.imgUrl = imgUrl;
         this.price = price;
     }
