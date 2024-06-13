@@ -2,18 +2,21 @@ package com.shop.service;
 
 import com.shop.dto.ItemFormDto;
 import com.shop.dto.ItemImgDto;
+import com.shop.dto.ItemSearchDto;
 import com.shop.entity.Item;
 import com.shop.entity.ItemImg;
 import com.shop.repository.ItemImgRepository;
 import com.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +58,7 @@ public class ItemService {
 
         //상품 이미지 조회
        List<ItemImg> itemImgList =
-               itemImgRepository.findByItemIdOrderByIdDesc(itemid);
+               itemImgRepository.findByItemIdOrderByIdAsc(itemid);
        List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
        //ItemImg(상품이미지) -> ItemImgDto 리스트에 추가
@@ -65,7 +68,7 @@ public class ItemService {
        }
 
        //Item(상품정보) -> itemFormDto 전달
-      Optional<Item> result = itemRepository.findById(itemid);
+       Optional<Item> result = itemRepository.findById(itemid);
        Item item = result.orElseThrow(() -> new EntityNotFoundException());
 
        //item -> itemFormDto 변환
@@ -93,5 +96,11 @@ public class ItemService {
                     itemImgFileList.get(i));
         }
         return item.getId();
+    }
+
+    //검색 조건 & 페이징 처리
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+        return itemRepository.getAdminItemPage(itemSearchDto, pageable);
     }
 }

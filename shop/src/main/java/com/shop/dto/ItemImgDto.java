@@ -33,6 +33,7 @@ public class ItemImgDto { //상품 저장 후 상품 이미지에 대한 데이�
 
     //ItemImg 엔티티를  받아서 ItemImgDto로 변환
     public static ItemImgDto ItemImgofItemImgDto(ItemImg itemImg) {
+
         return modelMapper.map(itemImg, ItemImgDto.class);
     }
 }
