@@ -33,19 +33,26 @@ public class OrderService {
 //        Optional<Item> results = itemRepository.findById(orderDto.getItemId());
 //        Item item = results.orElseThrow(() -> new EntityNotFoundException());
 
+        //주문 상품을 DB에 조회, 존재하지 않으면 예외 발생
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
+        //회원 이메일 조회
         Member member = memberRepository.findByEmail(email);
 
+        //주문 상품 리스트 생성
         List<OrderItem> orderItemList = new ArrayList<>();
 
+        //주문 상품 생성
         OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
 
+        //주문 상품 리스트 추가
         orderItemList.add(orderItem);
 
+        // 주문 생성
         Order order = Order.createOrder(member, orderItemList);
 
+        //주문을 DB에 저장
         orderRepository.save(order);
 
         return order.getId();
