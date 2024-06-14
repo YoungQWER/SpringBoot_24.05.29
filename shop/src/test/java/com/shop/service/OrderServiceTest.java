@@ -34,7 +34,7 @@ class OrderServiceTest {
 
         OrderDto orderDto = new OrderDto();
         orderDto.setItemId(1L);
-        orderDto.setCount(5);
+        orderDto.setCount(2);
         String email = "qwer@qwer";
 
         Long orderId = orderService.order(orderDto, email);
