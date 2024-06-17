@@ -16,7 +16,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int id;     // 사용자 ID
+    private Long id;     // 사용자 ID
 
     private String name;    // 사용자 이름
 
@@ -30,6 +30,6 @@ public class User {
     private String shippingPostalCode;  // 배송 우편번호
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role;      // 권한
 
 }

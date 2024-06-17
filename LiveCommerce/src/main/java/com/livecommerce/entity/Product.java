@@ -16,7 +16,7 @@ public class Product {
     @Id
     @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;     // 제품 ID
+    private Long id;     // 제품 ID
 
     @Column(nullable = false, length = 50)
     private String productName;     // 제품명
@@ -28,11 +28,9 @@ public class Product {
     @Column(name = "price", nullable = false)
     private int price;      // 제품 가격
 
-    private String photo;   // 제품 사진 경로
-
     @Column(nullable = false)
-    private  int stockNumber;
+    private  int stockNumber;   // 제품 수량
 
     @Enumerated(EnumType.STRING)
-    private ItemSellStatus itemSellStatus;      //판매 상태
+    private ItemSellStatus itemSellStatus;      // 판매 상태
 }

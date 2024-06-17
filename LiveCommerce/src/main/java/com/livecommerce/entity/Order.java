@@ -1,13 +1,12 @@
 package com.livecommerce.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "order")
@@ -17,12 +16,24 @@ import java.sql.Timestamp;
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
+    private Long id;     // 주문 ID
 
-    private int id; // 주문 ID
-    private int userID; // 주문한 사용자의 ID
-    private int productID; // 주문한 제품의 ID
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user; // 주문한 사용자의 ID
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL
+            ,orphanRemoval = true, fetch = FetchType.LAZY)  ////외래키 설정 하지않는다.
+    private List<OrderProduct> products = new ArrayList<>(); // 주문한 제품의 ID
+
     private int quantity; // 주문 수량
+
     private String shippingAddress; // 배송 주소
+
     private String shippingPostalCode; // 배송 우편번호
-    private Timestamp orderDate; // 주문 일자
+
+    private LocalDateTime orderDate; // 주문 일자
+
 }
