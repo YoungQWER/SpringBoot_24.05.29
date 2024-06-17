@@ -21,7 +21,7 @@ class OrderItemTest {
         order.setId(10L);
         order.setOrderDate(LocalDateTime.now());
 
-        List<OrderItem> oderItem = order.getOrderItems();
+        List<OrderItem> oderItem = order.getOderItems();
         OrderItem orderItem = new OrderItem();
         orderItem.setOrder(order);
 

@@ -20,24 +20,29 @@ import org.thymeleaf.util.StringUtils;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
-@Log4j2
 @RequiredArgsConstructor
+@Log4j2
 public class OrderService {
 
+    private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
-    private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
 
-    public Long order(OrderDto orderDto, String email){
+    public Long order(OrderDto orderDto, String email) {
+
+//        Optional<Item> results = itemRepository.findById(orderDto.getItemId());
+//        Item item = results.orElseThrow(() -> new EntityNotFoundException());
+
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
         Member member = memberRepository.findByEmail(email);
-
+        log.info("member =====> : " + member);
         List<OrderItem> orderItemList = new ArrayList<>();
 
         OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
@@ -51,82 +56,56 @@ public class OrderService {
         return order.getId();
     }
 
-
-    /*
-        이메일에 해당하는 사용자의 주문 목록을 조회하고,
-        각 주문에 대해 필요한 정보를 DTO로 변환하여 페이징된 형태로 반환합니다.
-        이를 통해 호출자는 사용자의 주문 이력을 엑세스 한다.
-     */
     @Transactional(readOnly = true)
-    public Page<OrderHistDto> getOrderList(String email, Pageable pageable){
+    public Page<OrderHistDto> getOrderList(String email, Pageable pageable) {
 
-        // 아이디와 페이징조건을 이용하여 주문 목록 조회
-        List<Order> orders = orderRepository.findOrders(email, pageable);
-        // 유저 주문 개수 조회
-        Long totalCount = orderRepository.countOrder(email);
+        //주문 목록 조회(유저당)
+        List<Order> orders = orderRepository.findOrders(email, pageable);   //개인당 구매 리스트
+        Long totalCount = orderRepository.countOrder(email);    //개인당 총구매 횟수
 
-        List<OrderHistDto> orderHistDtos = new ArrayList<>();
+        List<OrderHistDto> orderHistDtoList = new ArrayList<>();
 
-        //주문리스트 순회하면서 구매 이력 페이지에 전달할 DTO 생성
-
-        for(Order order : orders){
+        for (Order order : orders) {
             OrderHistDto orderHistDto = new OrderHistDto(order);
 
-            List<OrderItem> orderItems = order.getOrderItems(); //해당 주문의 주문 항목 리스트를 가져온다.
-            for(OrderItem orderItem : orderItems){
-                //주문 항목의 대표 이미지를 조회
-                ItemImg itemImg = itemImgRepository.findByItemIdOrderByIdAsc(orderItem.getItem().getId(), "Y");
-                //각 주문 항목에 대해 OrderItemDto 객체를 생성
-                OrderItemDto orderItemDto = new OrderItemDto(orderItem, itemImg.getImgUrl());
-                //생성된 OrderItemDto를 OrderHistDto에 추가
+            List<OrderItem> oderItems = order.getOderItems();
+            for (OrderItem oderItem : oderItems) {
+                ItemImg itemImg = itemImgRepository.findByItemIdAndRepimgYn(oderItem.getItem().getId(), "Y");
+
+                OrderItemDto orderItemDto = new OrderItemDto(oderItem, itemImg.getImgUrl());
+
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
-            //OrderHistDto를 리스트에 추가
-            orderHistDtos.add(orderHistDto);
+
+            orderHistDtoList.add(orderHistDto);
         }
 
-        // 조회된 OrderHistDto 객체들의 리스트,  페이징 정보,  전체 주문 수
-        return new PageImpl<OrderHistDto>(orderHistDtos, pageable, totalCount);
+        return new PageImpl<>(orderHistDtoList, pageable, totalCount);
     }
 
+    //현재 로그인 사용자와 구매이력있는 구매자와 같은 경우 true
     @Transactional(readOnly = true)
-    public boolean validateOrder(Long orderId, String email){
-        Member curMember = memberRepository.findByEmail(email);
+    public boolean validateOrder(Long orderId, String email) {
+
+        Member currentMember = memberRepository.findByEmail(email);
+
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(EntityNotFoundException::new);
+
         Member savedMember = order.getMember();
 
-        if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())){
+        if(!StringUtils.equals(currentMember.getEmail(), savedMember.getEmail())) {
             return false;
         }
 
         return true;
     }
 
-    /*
-       1. 이메일을 통해 Member 객체를 조회
-       2. 각 OrderDto 객체를 순회하면서, Item 객체를 조회하고 OrderItem 객체를 생성하여 리스트에 추가
-       3. OrderItem 리스트와 Member 객체를 사용하여 Order 객체를 생성
-       4. 생성된 Order 객체를 DB 저장하고, 생성된 주문의 ID를 반환
-     */
-    public Long orders(List<OrderDto> orderDtoList, String email){
+    //취소 로직
+    public void cancelOrder(Long orderId) {
+        Order order= orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
 
-        Member member = memberRepository.findByEmail(email);
-        List<OrderItem> orderItemList = new ArrayList<>();
-
-        for (OrderDto orderDto : orderDtoList) {
-            Item item = itemRepository.findById(orderDto.getItemId())
-                    .orElseThrow(EntityNotFoundException::new);
-
-            OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
-            orderItemList.add(orderItem);
-        }
-
-        Order order = Order.createOrder(member, orderItemList);
-        orderRepository.save(order);
-
-        return order.getId();
+        order.cancelOrder();
     }
-
-
 }

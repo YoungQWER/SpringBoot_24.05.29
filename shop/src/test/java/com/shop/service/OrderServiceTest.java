@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,15 +31,15 @@ class OrderServiceTest {
     MemberRepository memberRepository;
 
     @Test
+    @Commit
     public void order(){
 
         OrderDto orderDto = new OrderDto();
         orderDto.setItemId(1L);
-        orderDto.setCount(2);
-        String email = "qwer@qwer";
+        orderDto.setCount(5);
+        String email = "user@aaa.com";
 
         Long orderId = orderService.order(orderDto, email);
 
     }
-
 }

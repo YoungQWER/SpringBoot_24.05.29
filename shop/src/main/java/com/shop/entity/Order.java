@@ -27,7 +27,7 @@ public class Order extends BaseEntity {
 
     @OneToMany(mappedBy = "order" ,cascade = CascadeType.ALL
             ,orphanRemoval = true, fetch = FetchType.LAZY)  //외래키 설정 하지않는다.
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> oderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;   //주문일
 
@@ -35,7 +35,7 @@ public class Order extends BaseEntity {
     private OrderStatus orderStatus;
 
     public void addOrderItem(OrderItem orderItem) {
-        orderItems.add(orderItem);
+        oderItems.add(orderItem);
         orderItem.setOrder(this);
     }
 
@@ -43,14 +43,14 @@ public class Order extends BaseEntity {
 
         Order order = new Order();
 
-        order.setMember(member);    //주문자
+        order.setMember(member);  //주문자
 
-        for(OrderItem orderItem : orderItems) {     //주문 상품 목록
+        for(OrderItem orderItem : orderItems) {  //주문 상품 목록
             order.addOrderItem(orderItem);
         }
 
-        order.setOrderDate(LocalDateTime.now());    //주문 시간
-        order.setOrderStatus(OrderStatus.ORDER);    //주문
+        order.setOrderDate(LocalDateTime.now());  //주문 시간
+        order.setOrderStatus(OrderStatus.ORDER); //주문 상태
 
         return order;
     }
@@ -59,11 +59,39 @@ public class Order extends BaseEntity {
     public int getTotalPrice(){
         int totalPrice = 0;
 
-        for(OrderItem orderItem : orderItems) {
+        for(OrderItem orderItem : oderItems) {
             totalPrice += orderItem.getTotalPrice();
         }
 
         return totalPrice;
     }
+    
+    //주문 상태 취소로 변경, 주문 수량을 상품 재고 더해주기
+    public void cancelOrder(){
+        this.orderStatus = OrderStatus.CANCEL;
 
+        for(OrderItem orderItem : oderItems) {
+            orderItem.cancel();
+        }
+    }
+    
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -133,7 +133,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                                 item.id,
                                 item.itemNm,
                                 item.itemDetail,
-                                itemImg.oriUrl,
+                                itemImg.imgUrl,
                                 item.price
                         )
                 )
