@@ -20,6 +20,6 @@ public class Cart extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private User user; // 사용자 ID
+    private Member member; // 사용자 ID
 
 }

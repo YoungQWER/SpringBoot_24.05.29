@@ -1,6 +1,6 @@
-package com.livecommerce1.repository;
+package com.livecommerce1.entity;
 
-import com.livecommerce1.entity.User;
+import com.livecommerce1.repository.MemberRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,10 +16,10 @@ import javax.persistence.PersistenceContext;
 @SpringBootTest
 @Log4j2
 @Transactional
-class UserTest {
+class MemberTest {
 
     @Autowired
-    UserRepository userRepository;
+    MemberRepository memberRepository;
 
     @PersistenceContext
     EntityManager em;
@@ -29,19 +29,19 @@ class UserTest {
     @WithMockUser(username = "gildong", roles = "USER")
     public void auditingTest(){
 
-        User newUser = new User();
-        userRepository.save(newUser);
+        Member newMember = new Member();
+        memberRepository.save(newMember);
 
         em.flush();
         em.clear();
 
-        User user = userRepository.findById(newUser.getId())
+        Member member = memberRepository.findById(newMember.getId())
                 .orElseThrow(() -> new EntityNotFoundException());
 
-        log.info(user.getRegTime());
-        log.info(user.getUpdateTime());
-        log.info(user.getCreatedBy());
-        log.info(user.getModifiedBy());
+        log.info(member.getRegTime());
+        log.info(member.getUpdateTime());
+        log.info(member.getCreatedBy());
+        log.info(member.getModifiedBy());
 
     }
 }

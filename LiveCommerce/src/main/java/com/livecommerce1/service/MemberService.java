@@ -1,7 +1,8 @@
 package com.livecommerce1.service;
 
-import com.livecommerce1.entity.User;
-import com.livecommerce1.repository.UserRepository;
+
+import com.livecommerce1.entity.Member;
+import com.livecommerce1.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.User;
@@ -11,22 +12,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @Transactional
 @RequiredArgsConstructor
 @Log4j2
-public class UserService implements UserDetailsService {
+public class MemberService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
-    public User savaMember(User user) {
-        validdateDuplicatemember(user);
-        return userRepository.save(user);
+    public Member savaMember(Member member) {
+        validdateDuplicatemember(member);
+        return memberRepository.save(member);
     }
 
-    private void validdateDuplicatemember(User member) {
-        User findMember = userRepository.findByEmail(member.getEmail());
+    private void validdateDuplicatemember(Member member) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
 
         if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
@@ -37,16 +37,16 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         log.info("--------------------loadUserByUsername---------------------------------");
         log.info(email);
-        User user = userRepository.findByEmail(email);
+        Member member = memberRepository.findByEmail(email);
 
-        if (user == null) {
+        if (member == null) {
             throw new UsernameNotFoundException(email);
         }
 
         return User.builder()
-                .username(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole().toString())
+                .username(member.getEmail())
+                .password(member.getPassword())
+                .roles(member.getRole().toString())
                 .build();
     }
 }

@@ -23,7 +23,7 @@ public class Order extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user; // 주문한 사용자의 ID
+    private Member member; // 주문한 사용자의 ID
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL
             ,orphanRemoval = true, fetch = FetchType.LAZY)  ////외래키 설정 하지않는다.
