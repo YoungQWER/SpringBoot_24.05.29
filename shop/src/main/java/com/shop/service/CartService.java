@@ -2,6 +2,7 @@ package com.shop.service;
 
 import com.shop.dto.CartItemDto;
 import com.shop.entity.Cart;
+import com.shop.entity.CartItem;
 import com.shop.entity.Item;
 import com.shop.entity.Member;
 import com.shop.repository.CartItemRepository;
@@ -39,6 +40,22 @@ public class CartService {
         if (cart == null) {
             cart = Cart.createCart(member);
             cartRepository.save(cart);
+        }
+
+        //장바구니 상품 존재 여부 ?
+        CartItem savedCartItem =
+                cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
+
+        if (savedCartItem != null) {
+            savedCartItem.addCount(cartItemDto.getCount());
+            return savedCartItem.getId();
+        }else{
+            CartItem cartItem =
+                    CartItem.createCartItem(cart, item, cartItemDto.getCount());
+
+            cartItemRepository.save(cartItem);
+
+            return cartItem.getId();
         }
     }
 
