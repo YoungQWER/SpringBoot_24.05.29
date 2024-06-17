@@ -1,7 +1,7 @@
 package com.livecommerce1.service;
 
-import com.livecommerce1.dto.MemberFormDto;
-import com.livecommerce1.entity.Member;
+import com.shop.dto.MemberFormDto;
+import com.shop.entity.Member;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class MemberServiceTest {
 
     @Autowired
-    MemberService memberService;
+    MemberService  memberService;
 
     @Autowired
     PasswordEncoder passwordEncoder;

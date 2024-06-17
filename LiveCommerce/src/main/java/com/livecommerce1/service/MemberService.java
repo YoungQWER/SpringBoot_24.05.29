@@ -1,8 +1,7 @@
 package com.livecommerce1.service;
 
-
-import com.livecommerce1.entity.Member;
-import com.livecommerce1.repository.MemberRepository;
+import com.shop.entity.Member;
+import com.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.User;
@@ -10,7 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.transaction.Transactional;
 
 @Service
 @Transactional

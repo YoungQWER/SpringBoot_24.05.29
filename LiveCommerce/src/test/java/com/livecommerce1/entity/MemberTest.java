@@ -1,6 +1,6 @@
 package com.livecommerce1.entity;
 
-import com.livecommerce1.repository.MemberRepository;
+import com.shop.repository.MemberRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

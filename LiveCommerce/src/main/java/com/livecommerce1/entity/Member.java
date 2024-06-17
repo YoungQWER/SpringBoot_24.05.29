@@ -1,7 +1,7 @@
 package com.livecommerce1.entity;
 
-import com.livecommerce1.constant.Role;
-import com.livecommerce1.dto.MemberFormDto;
+import com.shop.constant.Role;
+import com.shop.dto.MemberFormDto;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -9,13 +9,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "member")
-@Getter
-@Setter
+@Getter@Setter
 @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member extends BaseEntity{
+public class Member  extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +35,7 @@ public class Member extends BaseEntity{
     private Role role;
 
     // 이거 대신 Mapper란 것 이용할 수 있음.
-    public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
+    public static  Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         return Member.builder()
                 .name(memberFormDto.getName())
                 .email(memberFormDto.getEmail())
