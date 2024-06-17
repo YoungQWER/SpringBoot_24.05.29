@@ -1,17 +1,18 @@
-package com.livecommerce.entity;
+package com.livecommerce1.entity;
 
-import com.livecommerce.constant.ItemSellStatus;
-import jakarta.persistence.*;
+import com.livecommerce1.constant.ItemSellStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.persistence.*;
 
 @Setter
 @Getter
 @ToString
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @Column(name = "product_id")

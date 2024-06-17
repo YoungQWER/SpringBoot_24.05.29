@@ -1,20 +1,21 @@
-package com.livecommerce.entity;
+package com.livecommerce1.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "order_product")
 @ToString
 @Setter
 @Getter
-public class OrderProduct {
+public class OrderProduct extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_product_id")
+    @Column(name = "order_product_id")  //기본키 설정
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,7 +1,7 @@
-package com.shop.service;
+package com.livecommerce1.service;
 
-import com.shop.entity.Member;
-import com.shop.repository.MemberRepository;
+import com.livecommerce1.entity.User;
+import com.livecommerce1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.User;
@@ -9,24 +9,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 @Log4j2
-public class MemberService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
 
-    public Member savaMember(Member member) {
-        validdateDuplicatemember(member);
-        return memberRepository.save(member);
+    public User savaMember(User user) {
+        validdateDuplicatemember(user);
+        return userRepository.save(user);
     }
 
-    private void validdateDuplicatemember(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
+    private void validdateDuplicatemember(User member) {
+        User findMember = userRepository.findByEmail(member.getEmail());
 
         if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
@@ -37,16 +37,16 @@ public class MemberService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         log.info("--------------------loadUserByUsername---------------------------------");
         log.info(email);
-        Member member = memberRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
 
-        if (member == null) {
+        if (user == null) {
             throw new UsernameNotFoundException(email);
         }
 
         return User.builder()
-                .username(member.getEmail())
-                .password(member.getPassword())
-                .roles(member.getRole().toString())
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .roles(user.getRole().toString())
                 .build();
     }
 }

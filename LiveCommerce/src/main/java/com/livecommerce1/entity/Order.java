@@ -1,9 +1,10 @@
-package com.livecommerce.entity;
+package com.livecommerce1.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @ToString
 @Getter
 @Setter
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +32,6 @@ public class Order {
     private int quantity; // 주문 수량
 
     private String shippingAddress; // 배송 주소
-
-    private String shippingPostalCode; // 배송 우편번호
 
     private LocalDateTime orderDate; // 주문 일자
 

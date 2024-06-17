@@ -1,6 +1,5 @@
-package com.livecommerce.entity;
+package com.livecommerce1.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,7 +25,7 @@ public class ProductImg extends BaseEntity {
     private String repimgYn; //대표이미지(이미지가 여러장일 때 , 메인페이지에서 보이는 이미지)
 
     @ManyToOne(fetch = FetchType.LAZY)   //외래키 설정
-    @JoinColumn(name="item_id")
+    @JoinColumn(name="product_id")
     private Product product;
     
     public void updateItemImg(String oriImgName, String imgName, String imgUrl) {
