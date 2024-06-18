@@ -1,6 +1,6 @@
 package com.livecommerce1.dto;
 
-import com.shop.constant.ItemSellStatus;
+import com.livecommerce1.constant.ItemSellStatus;
 import lombok.Getter;
 import lombok.Setter;
 

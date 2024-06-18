@@ -1,6 +1,6 @@
 package com.livecommerce1.entity;
 
-import com.shop.constant.OrderStatus;
+import com.livecommerce1.constant.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

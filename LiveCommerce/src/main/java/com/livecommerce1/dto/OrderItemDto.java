@@ -1,6 +1,6 @@
 package com.livecommerce1.dto;
 
-import com.shop.entity.OrderItem;
+import com.livecommerce1.entity.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 

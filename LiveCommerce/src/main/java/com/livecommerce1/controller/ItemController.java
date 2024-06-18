@@ -1,9 +1,9 @@
 package com.livecommerce1.controller;
 
-import com.shop.dto.ItemFormDto;
-import com.shop.dto.ItemSearchDto;
-import com.shop.entity.Item;
-import com.shop.service.ItemService;
+import com.livecommerce1.dto.ItemFormDto;
+import com.livecommerce1.dto.ItemSearchDto;
+import com.livecommerce1.entity.Item;
+import com.livecommerce1.service.ItemService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

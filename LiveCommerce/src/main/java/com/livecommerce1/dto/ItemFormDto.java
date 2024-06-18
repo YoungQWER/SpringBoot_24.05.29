@@ -1,7 +1,7 @@
 package com.livecommerce1.dto;
 
-import com.shop.constant.ItemSellStatus;
-import com.shop.entity.Item;
+import com.livecommerce1.constant.ItemSellStatus;
+import com.livecommerce1.entity.Item;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 

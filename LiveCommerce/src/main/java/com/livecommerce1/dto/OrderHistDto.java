@@ -1,7 +1,7 @@
 package com.livecommerce1.dto;
 
-import com.shop.constant.OrderStatus;
-import com.shop.entity.Order;
+import com.livecommerce1.constant.OrderStatus;
+import com.livecommerce1.entity.Order;
 import lombok.Getter;
 import lombok.Setter;
 

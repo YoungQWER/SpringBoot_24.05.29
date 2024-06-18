@@ -1,6 +1,6 @@
 package com.livecommerce1.dto;
 
-import com.shop.entity.ItemImg;
+import com.livecommerce1.entity.ItemImg;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

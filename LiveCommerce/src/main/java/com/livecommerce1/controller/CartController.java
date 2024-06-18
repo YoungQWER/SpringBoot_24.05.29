@@ -1,9 +1,9 @@
 package com.livecommerce1.controller;
 
-import com.shop.dto.CartDetailDto;
-import com.shop.dto.CartItemDto;
-import com.shop.dto.CartOrderDto;
-import com.shop.service.CartService;
+import com.livecommerce1.dto.CartDetailDto;
+import com.livecommerce1.dto.CartItemDto;
+import com.livecommerce1.dto.CartOrderDto;
+import com.livecommerce1.service.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

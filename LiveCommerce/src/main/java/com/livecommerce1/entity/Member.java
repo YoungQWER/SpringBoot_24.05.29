@@ -1,7 +1,7 @@
 package com.livecommerce1.entity;
 
-import com.shop.constant.Role;
-import com.shop.dto.MemberFormDto;
+import com.livecommerce1.constant.Role;
+import com.livecommerce1.dto.MemberFormDto;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

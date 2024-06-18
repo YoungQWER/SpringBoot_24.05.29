@@ -1,8 +1,7 @@
 package com.livecommerce1.entity;
 
-import com.shop.constant.ItemSellStatus;
-import com.shop.dto.ItemFormDto;
-import com.shop.exception.OutOfStockException;
+import com.livecommerce1.constant.ItemSellStatus;
+import com.livecommerce1.dto.ItemFormDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
