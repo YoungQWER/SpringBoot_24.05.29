@@ -1,6 +1,6 @@
-package com.shop.repository;
+package com.LiveCommerce.repository;
 
-import com.shop.entity.Item;
+import com.LivceCommerce.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -25,7 +25,4 @@ public interface ItemRepository extends JpaRepository<Item, Long> ,
 
     @Query(value = "select * from item where item_detail like %:itemDetail% order by price desc", nativeQuery = true)
     List<Item> findByItemDetailByNative(@Param("itemDetail") String itemDetail);
-
-    // 카테고리 ID로 상품 조회
-    List<Item> findByCategoryId(Long categoryId);
 }
