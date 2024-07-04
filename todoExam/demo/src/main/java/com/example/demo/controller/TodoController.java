@@ -5,6 +5,7 @@ import com.example.demo.dto.ResponseDTO;
 import com.example.demo.dto.TodoDTO;
 import com.example.demo.model.TodoEntity;
 import com.example.demo.service.TodoService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("todo")
+@Log4j2
 public class TodoController {
 
     @Autowired
@@ -32,6 +34,8 @@ public class TodoController {
     @PostMapping
     public ResponseEntity<?> createTodo(@RequestBody TodoDTO dto) {
         try {
+
+            log.info("------dto------ " + dto);
             String temporaryUserId = "temporary-user"; // temporary user id.
 
             // (1) TodoEntity로 변환한다.
@@ -68,6 +72,7 @@ public class TodoController {
     public ResponseEntity<?> updateTodo(@RequestBody TodoDTO dto) {
         String temporaryUserId = "temporary-user"; // temporary user id.
 
+        log.info("--------updateTodo-------" + dto.toString());
         // (1) dto를 entity로 변환한다.
         TodoEntity entity = TodoDTO.toEntity(dto);
 
@@ -90,6 +95,8 @@ public class TodoController {
     @DeleteMapping
     public ResponseEntity<?> deleteTodo(@RequestBody TodoDTO dto) {
         try {
+
+            log.info("--------deleteTodo-------" + dto);
             String temporaryUserId = "temporary-user"; // temporary user id.
 
             // (1) TodoEntity로 변환한다.
