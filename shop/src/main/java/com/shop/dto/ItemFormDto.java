@@ -10,8 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,21 +33,20 @@ public class ItemFormDto {
 
     private ItemSellStatus itemSellStatus;
 
-    private CategoryDto category;  // 카테고리 추가
-
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
     private List<Long> itemImgIds = new ArrayList<>();
 
     private static ModelMapper modelMapper = new ModelMapper();
 
-    // ItemFormDto 객체(this)를 Item 클래스의 객체로 변환
-    public Item createItem() {
+    //ItemFormDto 객체(this)를 Item 클래스의 객체로 변환
+    public Item createItem(){
         return modelMapper.map(this, Item.class);
     }
 
-    // Item 객체를 ItemFormDto 객체로 변환
-    public static ItemFormDto of(Item item) {
+    public static ItemFormDto of(Item item){
+
         return modelMapper.map(item, ItemFormDto.class);
     }
+
 }

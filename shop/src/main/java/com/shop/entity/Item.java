@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-@ToString(exclude = "category")
+@ToString
 @Entity
 @Table(name = "item")
 public class Item extends BaseEntity {
@@ -23,13 +23,13 @@ public class Item extends BaseEntity {
     private Long id;
 
     @Column(nullable = false, length = 50)
-    private String itemNm;
+    private String itemNm;   //item_Nm
 
     @Column(name = "price", nullable = false)
-    private int price;
+    private  int price;   //price
 
     @Column(nullable = false)
-    private int stockNumber;
+    private  int stockNumber; //stoack_number
 
     @Lob
     @Column(nullable = false)
@@ -38,29 +38,45 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    public void updateItem(ItemFormDto itemFormDto) {
+    public void updateItem(ItemFormDto itemFormDto){
         this.itemNm = itemFormDto.getItemNm();
         this.price = itemFormDto.getPrice();
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
-        // Category는 별도로 처리
-        // this.category = itemFormDto.getCategory();
     }
 
-    public void removeStock(int stockNumber) {
+    //상품 재고 수량 변경
+    public void removeStock(int stockNumber){
+
         int restStock = this.stockNumber - stockNumber;
-        if (restStock < 0) {
+
+        if(restStock < 0){
             throw new OutOfStockException("상품 재고가 부족 합니다. (현재 재고 수량 :" + this.stockNumber + ")");
         }
+
         this.stockNumber = restStock;
     }
 
-    public void addStock(int stockNumber) {
+    //상품 취소하면 취소 숫자만큼 원상 복구
+    public void addStock(int stockNumber){
         this.stockNumber += stockNumber;
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
