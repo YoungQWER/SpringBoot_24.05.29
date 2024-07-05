@@ -22,13 +22,12 @@ public class UserController {
     private final UserService userService;
     private final TokenProvider tokenProvider;
 
-    // 회원가입
-    @PostMapping("/signup")
+    @PostMapping("/signup")  //회원가입
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
         try{
 
             if(userDTO == null || userDTO.getPassword() == null){
-                throw new RuntimeException("Invalid Password value");
+                throw new RuntimeException("Invalid Password value.");
             }
 
             UserEntity user = UserEntity.builder()
@@ -36,33 +35,34 @@ public class UserController {
                     .password(userDTO.getPassword())
                     .build();
 
-            UserEntity registerUser = userService.create(user);
+            UserEntity registerdUser = userService.create(user);
 
             UserDTO responseUserDTO = userDTO.builder()
-                    .id(registerUser.getId())
-                    .username(registerUser.getUsername())
+                    .id(registerdUser.getId())
+                    .username(registerdUser.getUsername())
                     .build();
 
             return ResponseEntity.ok(responseUserDTO);
 
-        }catch(Exception e){
+        }catch (Exception e){
             ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity.badRequest().body(responseDTO);
         }
     }
 
-    // 로그인
-    @PostMapping("/signin")
+    @PostMapping("/signin")  //로그인
     public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO) {
+
         UserEntity user = userService.getByCredentials(userDTO.getUsername(), userDTO.getPassword());
 
         if(user != null){
 
             String token = tokenProvider.create(user);
-
+            log.info("-----------token---------- : " + token);
             UserDTO responseUserDTO = UserDTO.builder()
                     .username(user.getUsername())
                     .id(user.getId())
+                    .token(token)
                     .build();
 
             return ResponseEntity.ok(responseUserDTO);
@@ -71,11 +71,7 @@ public class UserController {
             ResponseDTO responseDTO = ResponseDTO.builder()
                     .error("Login Error")
                     .build();
-
             return ResponseEntity.badRequest().body(responseDTO);
         }
     }
-
-
-
 }
