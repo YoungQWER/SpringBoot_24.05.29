@@ -3,13 +3,18 @@ package com.example.demo.config;
 import com.example.demo.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -19,9 +24,23 @@ public class WebSecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+//    CorsConfigurationSource corsConfigurationSource() {
+//        return request -> {
+//            CorsConfiguration config = new CorsConfiguration();
+//            config.setAllowedHeaders(Collections.singletonList("*"));
+//            config.setAllowedMethods(Collections.singletonList("*"));
+//            config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:3000")); // ⭐️ 허용할 origin
+//            config.setAllowCredentials(true);
+//            return config;
+//        };
+//    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("------------------filterChain------------------------------");
+        // http 시큐리티 빌더
+//        http
+//                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()));
 
         http
                 .csrf(config-> config.disable())// csrf는 현재 사용하지 않으므로 disable

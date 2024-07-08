@@ -13,7 +13,6 @@ public class TodoDTO {
     private String title;
     private boolean done;
 
-
     public TodoDTO(final TodoEntity entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
